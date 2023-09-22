@@ -3,18 +3,23 @@
 /**
  * main.c
  */
+#define _LAUNCHXL_F28379D
+#define CPU1
 
 #include "F28x_Project.h"
 uint32_t count = 0;
 
 
 void Setup_ePWM(void){
+    int period = 500;
+    int duty = 200;
+
     EALLOW;
     CpuSysRegs.PCLKCR2.bit.EPWM1 = 1;
     CpuSysRegs.PCLKCR0.bit.TBCLKSYNC =0;
 
-    EPwm1Regs.TBPRD = 250;
-    EPwm1Regs.CMPA.bit.CMPA = 120;
+    EPwm1Regs.TBPRD = period;
+    EPwm1Regs.CMPA.bit.CMPA = duty;
 
     EPwm1Regs.TBPHS.bit.TBPHS = 0;                  // Phase is 0
     EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_CTR_ZERO;
@@ -37,19 +42,15 @@ void Setup_ePWM(void){
 
     EPwm1Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
     EPwm1Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
-    EPwm1Regs.DBFED.bit.DBFED = 50;
-    EPwm1Regs.DBRED.bit.DBRED = 50;
+    EPwm1Regs.DBFED.bit.DBFED = 80;
+    EPwm1Regs.DBRED.bit.DBRED = 80;
 
-    CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 1;
 
-    EDIS;
 
-    EALLOW;
     CpuSysRegs.PCLKCR2.bit.EPWM2 = 1;
-    CpuSysRegs.PCLKCR0.bit.TBCLKSYNC =0;
 
-    EPwm2Regs.TBPRD = 250;
-    EPwm2Regs.CMPA.bit.CMPA = 120;
+    EPwm2Regs.TBPRD = period;
+    EPwm2Regs.CMPA.bit.CMPA = duty;
 
     EPwm2Regs.TBPHS.bit.TBPHS =  0;                  // Phase is 0
     EPwm2Regs.TBCTL.bit.SYNCOSEL = TB_SYNC_IN;
@@ -72,8 +73,8 @@ void Setup_ePWM(void){
 
     EPwm2Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
     EPwm2Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
-    EPwm2Regs.DBFED.bit.DBFED = 50;
-    EPwm2Regs.DBRED.bit.DBRED = 50;
+    EPwm2Regs.DBFED.bit.DBFED = 80;
+    EPwm2Regs.DBRED.bit.DBRED = 80;
 
     CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 1;
 
@@ -121,46 +122,38 @@ void Setup_GPIO(void){
     EDIS;
 }
 
-__interrupt void isr_cpu_timer0(void){
-    //GpioDataRegs.GPATOGGLE.bit.GPIO31 = 1;
-    PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
-}
-
 int main(void)
 {
-	DINT;
-	InitPieCtrl();
-	IER = 0x0000;
-	IFR = 0X0000;
-	InitPieVectTable();
+    DINT;
+    InitPieCtrl();
+    IER = 0x0000;
+    IFR = 0X0000;
+    InitPieVectTable();
+    InitCpuTimers();
+    InitSysCtrl();
 
-	Setup_GPIO();
-	Setup_ePWM();
+    Setup_GPIO();
+    Setup_ePWM();
+    EINT;
+    ERTM;
 
-	EINT;
-	ERTM;
+    GpioDataRegs.GPBDAT.bit.GPIO34 = 1;
+    GpioDataRegs.GPADAT.bit.GPIO31 = 1;
+    //pwm enable
+    GpioDataRegs.GPASET.bit.GPIO16 = 1;
+    GpioDataRegs.GPASET.bit.GPIO24 = 1;
 
+    EALLOW;
 
+    while(42){
+        GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
+        for(count = 0; count<0x00FFFFFF; count++){
 
-	GpioDataRegs.GPBDAT.bit.GPIO34 = 1;
-	GpioDataRegs.GPADAT.bit.GPIO31 = 1;
-	//pwm enable
-	GpioDataRegs.GPASET.bit.GPIO16 = 1;
-	GpioDataRegs.GPASET.bit.GPIO24 = 1;
+        }
+       // GpioDataRegs.GPATOGGLE.bit.GPIO16 = 1;
 
-	EALLOW;
-	PieVectTable.TIMER0_INT = &isr_cpu_timer0;
+        GpioDataRegs.GPATOGGLE.bit.GPIO31 = 1;
 
-	while(42){
-	    GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
-	    for(count = 0; count<0x00cFFFFF; count++){
-
-	    }
-	   // GpioDataRegs.GPATOGGLE.bit.GPIO16 = 1;
-
-	    GpioDataRegs.GPATOGGLE.bit.GPIO31 = 1;
-
-	}
-	return 0;
+    }
+    return 0;
 }
-
