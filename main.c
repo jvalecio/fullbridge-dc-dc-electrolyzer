@@ -3,8 +3,6 @@
 /**
  * main.c
  */
-#define _LAUNCHXL_F28379D
-#define CPU1
 
 #include "F28x_Project.h"
 uint32_t count = 0;
