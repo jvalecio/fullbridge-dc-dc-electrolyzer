@@ -9,21 +9,33 @@ CMD_SRCS += \
 ../2837x_FLASH_lnk_cpu1.cmd 
 
 C_SRCS += \
-../main.c 
+../main.c \
+../peripheral_config.c \
+../system_init.c 
 
 C_DEPS += \
-./main.d 
+./main.d \
+./peripheral_config.d \
+./system_init.d 
 
 OBJS += \
-./main.obj 
+./main.obj \
+./peripheral_config.obj \
+./system_init.obj 
 
 OBJS__QUOTED += \
-"main.obj" 
+"main.obj" \
+"peripheral_config.obj" \
+"system_init.obj" 
 
 C_DEPS__QUOTED += \
-"main.d" 
+"main.d" \
+"peripheral_config.d" \
+"system_init.d" 
 
 C_SRCS__QUOTED += \
-"../main.c" 
+"../main.c" \
+"../peripheral_config.c" \
+"../system_init.c" 
 
 

@@ -1,4 +1,6 @@
 "./main.obj"
+"./peripheral_config.obj"
+"./system_init.obj"
 "./lib/F2837xD_Adc.obj"
 "./lib/F2837xD_CodeStartBranch.obj"
 "./lib/F2837xD_CpuTimers.obj"
