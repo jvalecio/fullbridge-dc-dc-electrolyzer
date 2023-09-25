@@ -10,6 +10,8 @@
 
 void GPIO_init();
 void ePWM_init();
+void PIE_init();
 
+void peripheral_init();
 
 #endif /* PERIPHERAL_CONFIG_H_ */

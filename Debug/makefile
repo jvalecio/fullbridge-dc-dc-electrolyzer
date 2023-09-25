@@ -10,9 +10,6 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./main.obj" \
-"./peripheral_config.obj" \
-"./system_init.obj" \
 "./lib/F2837xD_Adc.obj" \
 "./lib/F2837xD_CodeStartBranch.obj" \
 "./lib/F2837xD_CpuTimers.obj" \
@@ -43,7 +40,13 @@ ORDERED_OBJS += \
 "./lib/F2837xD_sdfm_drivers.obj" \
 "./lib/F2837xD_struct.obj" \
 "./lib/F2837xD_usDelay.obj" \
-"../2837x_FLASH_lnk_cpu1.cmd" \
+"./src/hal/blink.obj" \
+"./src/hal/pwm.obj" \
+"./src/main.obj" \
+"./src/peripheral_config.obj" \
+"./src/system_init.obj" \
+"../2837xD_RAM_lnk_cpu1_USB.cmd" \
+"../F2837xD_Headers_nonBIOS_cpu1.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
 
@@ -56,8 +59,12 @@ RMDIR := RMDIR /S/Q
 -include sources.mk
 -include subdir_vars.mk
 -include lib/subdir_vars.mk
+-include src/hal/subdir_vars.mk
+-include src/subdir_vars.mk
 -include subdir_rules.mk
 -include lib/subdir_rules.mk
+-include src/hal/subdir_rules.mk
+-include src/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -175,8 +182,8 @@ fullbridge-dc-dc-electrolyzer.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "peripheral_config.obj" "system_init.obj" "lib\F2837xD_Adc.obj" "lib\F2837xD_CodeStartBranch.obj" "lib\F2837xD_CpuTimers.obj" "lib\F2837xD_DBGIER.obj" "lib\F2837xD_DefaultISR.obj" "lib\F2837xD_Dma.obj" "lib\F2837xD_ECap.obj" "lib\F2837xD_EPwm.obj" "lib\F2837xD_EQep.obj" "lib\F2837xD_Emif.obj" "lib\F2837xD_GlobalVariableDefs.obj" "lib\F2837xD_Gpio.obj" "lib\F2837xD_I2C.obj" "lib\F2837xD_Ipc.obj" "lib\F2837xD_Ipc_Driver.obj" "lib\F2837xD_Ipc_Driver_Lite.obj" "lib\F2837xD_Ipc_Driver_Util.obj" "lib\F2837xD_Mcbsp.obj" "lib\F2837xD_PieCtrl.obj" "lib\F2837xD_PieVect.obj" "lib\F2837xD_Sci.obj" "lib\F2837xD_Spi.obj" "lib\F2837xD_SysCtrl.obj" "lib\F2837xD_TempSensorConv.obj" "lib\F2837xD_Upp.obj" "lib\F2837xD_can.obj" "lib\F2837xD_sci_io.obj" "lib\F2837xD_sdfm_drivers.obj" "lib\F2837xD_struct.obj" "lib\F2837xD_usDelay.obj" 
-	-$(RM) "main.d" "peripheral_config.d" "system_init.d" "lib\F2837xD_Adc.d" "lib\F2837xD_CpuTimers.d" "lib\F2837xD_DefaultISR.d" "lib\F2837xD_Dma.d" "lib\F2837xD_ECap.d" "lib\F2837xD_EPwm.d" "lib\F2837xD_EQep.d" "lib\F2837xD_Emif.d" "lib\F2837xD_GlobalVariableDefs.d" "lib\F2837xD_Gpio.d" "lib\F2837xD_I2C.d" "lib\F2837xD_Ipc.d" "lib\F2837xD_Ipc_Driver.d" "lib\F2837xD_Ipc_Driver_Lite.d" "lib\F2837xD_Ipc_Driver_Util.d" "lib\F2837xD_Mcbsp.d" "lib\F2837xD_PieCtrl.d" "lib\F2837xD_PieVect.d" "lib\F2837xD_Sci.d" "lib\F2837xD_Spi.d" "lib\F2837xD_SysCtrl.d" "lib\F2837xD_TempSensorConv.d" "lib\F2837xD_Upp.d" "lib\F2837xD_can.d" "lib\F2837xD_sci_io.d" "lib\F2837xD_sdfm_drivers.d" "lib\F2837xD_struct.d" 
+	-$(RM) "lib\F2837xD_Adc.obj" "lib\F2837xD_CodeStartBranch.obj" "lib\F2837xD_CpuTimers.obj" "lib\F2837xD_DBGIER.obj" "lib\F2837xD_DefaultISR.obj" "lib\F2837xD_Dma.obj" "lib\F2837xD_ECap.obj" "lib\F2837xD_EPwm.obj" "lib\F2837xD_EQep.obj" "lib\F2837xD_Emif.obj" "lib\F2837xD_GlobalVariableDefs.obj" "lib\F2837xD_Gpio.obj" "lib\F2837xD_I2C.obj" "lib\F2837xD_Ipc.obj" "lib\F2837xD_Ipc_Driver.obj" "lib\F2837xD_Ipc_Driver_Lite.obj" "lib\F2837xD_Ipc_Driver_Util.obj" "lib\F2837xD_Mcbsp.obj" "lib\F2837xD_PieCtrl.obj" "lib\F2837xD_PieVect.obj" "lib\F2837xD_Sci.obj" "lib\F2837xD_Spi.obj" "lib\F2837xD_SysCtrl.obj" "lib\F2837xD_TempSensorConv.obj" "lib\F2837xD_Upp.obj" "lib\F2837xD_can.obj" "lib\F2837xD_sci_io.obj" "lib\F2837xD_sdfm_drivers.obj" "lib\F2837xD_struct.obj" "lib\F2837xD_usDelay.obj" "src\hal\blink.obj" "src\hal\pwm.obj" "src\main.obj" "src\peripheral_config.obj" "src\system_init.obj" 
+	-$(RM) "lib\F2837xD_Adc.d" "lib\F2837xD_CpuTimers.d" "lib\F2837xD_DefaultISR.d" "lib\F2837xD_Dma.d" "lib\F2837xD_ECap.d" "lib\F2837xD_EPwm.d" "lib\F2837xD_EQep.d" "lib\F2837xD_Emif.d" "lib\F2837xD_GlobalVariableDefs.d" "lib\F2837xD_Gpio.d" "lib\F2837xD_I2C.d" "lib\F2837xD_Ipc.d" "lib\F2837xD_Ipc_Driver.d" "lib\F2837xD_Ipc_Driver_Lite.d" "lib\F2837xD_Ipc_Driver_Util.d" "lib\F2837xD_Mcbsp.d" "lib\F2837xD_PieCtrl.d" "lib\F2837xD_PieVect.d" "lib\F2837xD_Sci.d" "lib\F2837xD_Spi.d" "lib\F2837xD_SysCtrl.d" "lib\F2837xD_TempSensorConv.d" "lib\F2837xD_Upp.d" "lib\F2837xD_can.d" "lib\F2837xD_sci_io.d" "lib\F2837xD_sdfm_drivers.d" "lib\F2837xD_struct.d" "src\hal\blink.d" "src\hal\pwm.d" "src\main.d" "src\peripheral_config.d" "src\system_init.d" 
 	-$(RM) "lib\F2837xD_CodeStartBranch.d" "lib\F2837xD_DBGIER.d" "lib\F2837xD_usDelay.d" 
 	-@echo 'Finished clean'
 	-@echo ' '

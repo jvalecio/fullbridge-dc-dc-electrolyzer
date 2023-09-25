@@ -20,7 +20,9 @@ void system_init(){
     InitCpuTimers();
     InitSysCtrl();
 
-
     EINT;
     ERTM;
+
+    peripheral_init();
+
 }
