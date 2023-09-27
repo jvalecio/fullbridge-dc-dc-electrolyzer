@@ -113,6 +113,7 @@ PDE_DEPS__QUOTED :=
 SUBDIRS := \
 . \
 lib \
-src/hal \
+src/drivers \
+src/hal/gpio \
 src \
 

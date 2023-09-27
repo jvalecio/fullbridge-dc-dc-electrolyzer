@@ -6,27 +6,27 @@ SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/hal/c2000_gpio_hw_interface.c \
-../src/hal/hal_gpio.c 
+../src/drivers/blink.c \
+../src/drivers/pwm.c 
 
 C_DEPS += \
-./src/hal/c2000_gpio_hw_interface.d \
-./src/hal/hal_gpio.d 
+./src/drivers/blink.d \
+./src/drivers/pwm.d 
 
 OBJS += \
-./src/hal/c2000_gpio_hw_interface.obj \
-./src/hal/hal_gpio.obj 
+./src/drivers/blink.obj \
+./src/drivers/pwm.obj 
 
 OBJS__QUOTED += \
-"src\hal\c2000_gpio_hw_interface.obj" \
-"src\hal\hal_gpio.obj" 
+"src\drivers\blink.obj" \
+"src\drivers\pwm.obj" 
 
 C_DEPS__QUOTED += \
-"src\hal\c2000_gpio_hw_interface.d" \
-"src\hal\hal_gpio.d" 
+"src\drivers\blink.d" \
+"src\drivers\pwm.d" 
 
 C_SRCS__QUOTED += \
-"../src/hal/c2000_gpio_hw_interface.c" \
-"../src/hal/hal_gpio.c" 
+"../src/drivers/blink.c" \
+"../src/drivers/pwm.c" 
 
 

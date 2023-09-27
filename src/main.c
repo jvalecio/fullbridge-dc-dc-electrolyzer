@@ -7,6 +7,8 @@
 #include "hal/blink.h"
 #include "hal/pwm.h"
 
+
+
 uint32_t phase_shift = 0;
 
 int main(void)
@@ -18,6 +20,7 @@ int main(void)
 
     while(42){
         pwm_phase_set(phase_shift);
+
     }
 
     return 0;
