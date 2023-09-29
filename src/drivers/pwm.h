@@ -11,5 +11,6 @@
 
 void pwm_phase_set(int phase);
 void pwm_phase_step(int dph, bool dir);
+void pwm_enable(int arg);
 
 #endif /* SRC_HAL_PWM_H_ */

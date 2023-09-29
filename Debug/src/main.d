@@ -67,8 +67,8 @@ src/main.obj: C:/ti/controlSUITE/device_support/F2837xD/v210/F2837xD_common/incl
 src/main.obj: C:/ti/controlSUITE/device_support/F2837xD/v210/F2837xD_common/include/F2837xD_Upp_defines.h
 src/main.obj: C:/ti/controlSUITE/device_support/F2837xD/v210/F2837xD_common/include/F2837xD_defaultisr.h
 src/main.obj: ../src/g_defines.h
-src/main.obj: ../src/hal/blink.h
-src/main.obj: ../src/hal/pwm.h
+src/main.obj: ../src/drivers/blink.h
+src/main.obj: ../src/drivers/pwm.h
 
 ../src/main.c:
 
@@ -204,7 +204,7 @@ C:/ti/controlSUITE/device_support/F2837xD/v210/F2837xD_common/include/F2837xD_de
 
 ../src/g_defines.h:
 
-../src/hal/blink.h:
+../src/drivers/blink.h:
 
-../src/hal/pwm.h:
+../src/drivers/pwm.h:
 
